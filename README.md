@@ -12,6 +12,8 @@ A cross-platform desktop application for audio transcription using NVIDIA Parake
 - **Windows Backends**: DirectML, CPU, WebGPU support
 - **Export Options**: Save as text file or copy to clipboard
 
+- <a href="https://www.flaticon.com/free-icons/parrot" title="parrot icons">Parrot icons created by B.Genesis - Flaticon</a>
+
 ## UI Layout
 
 ```
