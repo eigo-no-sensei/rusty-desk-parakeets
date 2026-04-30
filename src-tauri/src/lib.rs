@@ -40,7 +40,7 @@ pub struct TranscriptionResult {
 
 /// Initialize the model from the tdt.int8 folder
 #[tauri::command]
-pub async fn init_model(state: State<'_, AppState>) -> Result<TranscriptionResult, String> {
+async fn init_model(state: State<'_, AppState>) -> Result<TranscriptionResult, String> {
     info!("Initializing Parakeet TDT model from: {:?}", state.model_dir);
 
     let load_start = Instant::now();
@@ -99,7 +99,7 @@ pub async fn init_model(state: State<'_, AppState>) -> Result<TranscriptionResul
 
 /// Transcribe an audio file
 #[tauri::command]
-pub async fn transcribe_audio(
+async fn transcribe_audio(
     audio_path: String,
     state: State<'_, AppState>,
 ) -> Result<TranscriptionResult, String> {
@@ -180,7 +180,7 @@ pub async fn transcribe_audio(
 
 /// Get the last transcription result
 #[tauri::command]
-pub fn get_last_transcript(state: State<'_, AppState>) -> Result<Option<String>, String> {
+fn get_last_transcript(state: State<'_, AppState>) -> Result<Option<String>, String> {
     let guard = state.last_transcript.lock().map_err(|e| e.to_string())?;
     Ok(guard.clone())
 }
