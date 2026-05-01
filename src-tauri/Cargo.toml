@@ -9,6 +9,7 @@ license = "MIT"
 [lib]
 name = "parakeet_tdt_app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
+path = "src/lib.rs"
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
