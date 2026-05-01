@@ -25,11 +25,21 @@ const CheckIcon = () => (
   </svg>
 );
 
+const YoutubeIcon = () => (
+  <svg className="drop-zone-icon" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M23.498 6.186a3.013 3.013 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.013 3.013 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.013 3.013 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.013 3.013 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </svg>
+);
+
 function App() {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [youtubeUrl, setYoutubeUrl] = useState<string>('');
+  const [keepFile, setKeepFile] = useState(false);
+  const [downloadVideo, setDownloadVideo] = useState(false);
   const [transcription, setTranscription] = useState<string | null>(null);
   const [transcriptionTime, setTranscriptionTime] = useState<number | null>(null);
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [isYoutubeTranscribing, setIsYoutubeTranscribing] = useState(false);
   const [isModelLoading, setIsModelLoading] = useState(false);
   const [modelStatus, setModelStatus] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -144,6 +154,36 @@ function App() {
     }
   }, [selectedFile]);
 
+  // Handle YouTube transcription
+  const handleTranscribeYoutube = useCallback(async () => {
+    if (!youtubeUrl) return;
+
+    setIsYoutubeTranscribing(true);
+    setError(null);
+    setTranscription(null);
+    setTranscriptionTime(null);
+
+    try {
+      const result = await invoke<TranscriptionResult>('transcribe_youtube', {
+        url: youtubeUrl,
+        keepFile: keepFile,
+        downloadVideo: downloadVideo,
+      });
+
+      if (result.success) {
+        setTranscription(result.text);
+        setTranscriptionTime(result.duration_secs);
+      } else {
+        setError(result.error || 'YouTube transcription failed');
+      }
+    } catch (e) {
+      console.error('YouTube transcribe error:', e);
+      setError(String(e));
+    } finally {
+      setIsYoutubeTranscribing(false);
+    }
+  }, [youtubeUrl, keepFile, downloadVideo]);
+
   // Handle save as text
   const handleSaveAsText = useCallback(async () => {
     if (!transcription) return;
@@ -232,6 +272,62 @@ function App() {
             <p className="drop-zone-formats">Supports: MP4, MKV, OGG, MP3</p>
           </>
         )}
+      </div>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <span>OR</span>
+      </div>
+
+      {/* YouTube URL Section */}
+      <div className="youtube-section">
+        <div className="youtube-input-group">
+          <YoutubeIcon />
+          <input
+            type="text"
+            className="youtube-url-input"
+            placeholder="Enter YouTube or video URL..."
+            value={youtubeUrl}
+            onChange={(e) => setYoutubeUrl(e.target.value)}
+            disabled={isYoutubeTranscribing || isModelLoading}
+          />
+        </div>
+        
+        <div className="youtube-options">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={keepFile}
+              onChange={(e) => setKeepFile(e.target.checked)}
+              disabled={isYoutubeTranscribing}
+            />
+            Keep downloaded file
+          </label>
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={downloadVideo}
+              onChange={(e) => setDownloadVideo(e.target.checked)}
+              disabled={isYoutubeTranscribing}
+            />
+            Download video (not just audio)
+          </label>
+        </div>
+        
+        <button
+          className="btn btn-primary youtube-btn"
+          onClick={handleTranscribeYoutube}
+          disabled={!youtubeUrl || isYoutubeTranscribing || isModelLoading}
+        >
+          {isYoutubeTranscribing ? (
+            <>
+              <span className="spinner"></span>
+              Downloading & Transcribing...
+            </>
+          ) : (
+            'Transcribe from URL'
+          )}
+        </button>
       </div>
 
       {/* Action Buttons Row */}
