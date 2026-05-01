@@ -215,3 +215,103 @@
   border-radius: var(--radius-sm);
   margin-bottom: var(--spacing-md);
 }
+
+/* Error Message */
+.error-message {
+  color: var(--color-error);
+  font-size: 14px;
+  padding: var(--spacing-md);
+  background-color: #fef2f2;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Section Divider */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: var(--spacing-lg) 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 0 var(--spacing-md);
+}
+
+/* YouTube Section */
+.youtube-section {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+}
+
+.youtube-input-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+}
+
+.youtube-input-group .drop-zone-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-error);
+  flex-shrink: 0;
+}
+
+.youtube-url-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: var(--font-family);
+  color: var(--color-text-primary);
+}
+
+.youtube-url-input:disabled {
+  background-color: transparent;
+}
+
+.youtube-url-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.youtube-options {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.youtube-btn {
+  width: 100%;
+  margin-top: var(--spacing-md);
+}

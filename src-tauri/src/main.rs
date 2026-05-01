@@ -35,6 +35,7 @@ fn main() {
             parakeet_tdt_app_lib::commands::init_model,
             parakeet_tdt_app_lib::commands::transcribe_audio,
             parakeet_tdt_app_lib::commands::get_last_transcript,
+            parakeet_tdt_app_lib::commands::transcribe_youtube,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
