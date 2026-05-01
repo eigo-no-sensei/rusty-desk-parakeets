@@ -199,9 +199,9 @@ pub fn get_last_transcript(state: State<'_, AppState>) -> Result<Option<String>,
 /// Get the yt-dlp executable path from bundled resources
 fn get_ytdlp_path() -> Result<PathBuf, String> {
     // Try to get yt-dlp from the executable directory's resources folder
-    let exe_dir = std::env::current_exe()
-        .map_err(|e| format!("Failed to get executable path: {}", e))?
-        .parent()
+    let exe_path = std::env::current_exe()
+        .map_err(|e| format!("Failed to get executable path: {}", e))?;
+    let exe_dir = exe_path.parent()
         .ok_or_else(|| "Failed to get executable directory".to_string())?;
     
     let ytdlp_path = exe_dir.join("yt-dlp");
