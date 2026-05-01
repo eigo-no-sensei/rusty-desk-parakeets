@@ -29,20 +29,10 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "windows": {
-      "nsis": {
-        "installMode": "currentUser"
-      }
-    }
+    "resources": {
+      "src/tdtv2.int8/**/*": "tdtv2.int8/"
+    },
+    "windows": {}
   },
-  "plugins": {
-    "dialog": {},
-    "clipboard-manager": {},
-    "fs": {
-      "scope": {
-        "allow": ["**"],
-        "deny": []
-      }
-    }
-  }
+  "plugins": {}
 }
