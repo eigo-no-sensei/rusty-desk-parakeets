@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Parakeet TDT",
+  "version": "0.1.0",
+  "identifier": "com.parakeet.tdt",
+  "build": {
+    "frontendDist": "../../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Parakeet TDT - Audio Transcription",
+        "width": 800,
+        "height": 700,
+        "resizable": true,
+        "center": true,
+        "minWidth": 600,
+        "minHeight": 500
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "resources": {
+      "src/tdtv2.int8/**/*": "tdtv2.int8/"
+    },
+    "windows": {}
+  },
+  "plugins": {}
+}
